@@ -1,0 +1,15 @@
+{
+  "name": "mistralapi",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Minimal chat web app powered by the Mistral API",
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "dependencies": {
+    "@mistralai/mistralai": "^3.5.0",
+    "dotenv": "^17.2.3",
+    "express": "^5.3.0"
+  }
+}
