@@ -1,25 +1,25 @@
 # Mistral Chat
 
-A minimal web app that calls the [Mistral API](https://docs.mistral.ai/) with the official TypeScript SDK (`@mistralai/mistralai`). The API key stays on the server; the browser only talks to `/api/chat`.
+Minimálna chatovacia webová aplikácia poháňaná [Mistral API](https://docs.mistral.ai/) (model `mistral-small-latest`). Aplikácia je čisto statická a automaticky sa nasadzuje na **GitHub Pages** cez GitHub Actions.
 
-## Setup
+## Používanie
+
+1. Otvor stránku (URL nájdeš v *Settings → Pages* repozitára).
+2. Klikni na **API kľúč** a vlož kľúč z [console.mistral.ai](https://console.mistral.ai/).
+3. Kľúč sa uloží len v tvojom prehliadači (localStorage) a požiadavky idú priamo na `api.mistral.ai` — nikdy sa neukladá do repozitára ani na žiadny server.
+
+> Poznámka: kľúč v prehliadači je viditeľný jeho majiteľovi. Toto riešenie je určené na osobné použitie (BYOK). Ak potrebuješ kľúč držať na serveri, nasad aplikáciu s backendom (napr. serverless funkcia) namiesto statického hostingu.
+
+## Nasadenie (automatické)
+
+Workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) deployuje obsah priečinka `public/` na GitHub Pages po každom pushi do `main` (aj ručne cez *Run workflow*).
+
+Jednorazovo povoľ v repozitári: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+
+## Lokálny vývoj
+
+Aplikácia nemá žiadne závislosti — stačí otvoriť `public/index.html` v prehliadači, alebo spustiť:
 
 ```bash
-npm install
-cp .env.example .env
+npx serve public
 ```
-
-Then edit `.env` and set `MISTRAL_API_KEY` to your key from [console.mistral.ai](https://console.mistral.ai/).
-
-## Run
-
-```bash
-npm start
-```
-
-Open http://localhost:3000 and start chatting.
-
-## How it works
-
-- `server.mjs` — Express server that serves `public/` and exposes `POST /api/chat`, which forwards the conversation to Mistral using `mistral-small-latest` via `client.chat.complete()`.
-- `public/index.html` — single-file chat UI (HTML/CSS/JS) that keeps the message history client-side.
